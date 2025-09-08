@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact – arch-type</title>
   <style>
-    :root{
-      --w: 80vw;       /* overall stack width */
-      --max: 400px;    /* desktop cap */
-      --gap-big: 30px; /* space after the title */
-      --gap-small: 20px; /* tighter space between email and phone */
+    :root {
+      --w: 80vw;        /* overall stack width */
+      --max: 400px;     /* desktop cap */
+      --gap-big: 30px;  /* space after the title */
+      --gap-small: 16px; /* space after the email (adjust this as needed) */
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       background: #fff;
@@ -21,6 +23,7 @@
       justify-content: center;
       min-height: 100vh;
     }
+
     .mark {
       position: absolute;
       top: 20px;
@@ -29,37 +32,41 @@
       height: auto;
       display: block;
     }
+
     main {
       text-align: center;
     }
+
     main img {
       display: block;
       margin: 0 auto;
       width: min(var(--w), var(--max));
       height: auto;
     }
+
     /* spacing rules */
     .title { margin-bottom: var(--gap-big); }
-    .email { margin-bottom: var(--gap-small); }
-    .phone { margin-bottom: 0; }
+    .email img { margin-bottom: var(--gap-small); }
+    .phone img { margin-bottom: 0; }
+
     a { text-decoration: none; }
   </style>
 </head>
 <body>
   <!-- Logo in top left -->
-  <img src="Logo.svg?v=6" alt="arch-type logo" class="mark" />
+  <img src="Logo.svg?v=7" alt="arch-type logo" class="mark" />
 
   <!-- Center stack -->
   <main>
-    <img class="title" src="contact.svg?v=6" alt="Contact" />
+    <img class="title" src="contact.svg?v=7" alt="Contact" />
 
     <a class="email" href="mailto:info@arch-type.org">
-      <img src="infoatarchetype.svg?v=6" alt="info@arch-type.org" />
+      <img src="infoatarchetype.svg?v=7" alt="info@arch-type.org" />
     </a>
 
     <a class="phone" href="tel:+17182184120">
-      <img id="phone" src="phonenumber.svg?v=6" alt="718.218.4120"
-           onerror="this.onerror=null; this.src='PhoneNumber.svg?v=6'">
+      <img id="phone" src="phonenumber.svg?v=7" alt="718.218.4120"
+           onerror="this.onerror=null; this.src='PhoneNumber.svg?v=7'">
     </a>
   </main>
 </body>
