@@ -9,7 +9,7 @@
       --w: 80vw;        /* overall stack width */
       --max: 400px;     /* desktop cap */
       --gap-big: 35px;  /* space after the title */
-      --gap-small: 12px; /* space after the email (adjust this as needed) */
+      --gap-small: 12px; /* space after the email */
     }
 
     * { box-sizing: border-box; }
@@ -49,24 +49,26 @@
     .email img { margin-bottom: var(--gap-small); }
     .phone img { margin-bottom: 0; }
 
-    a { text-decoration: none; }
+    a { text-decoration: none; color: inherit; }
   </style>
 </head>
 <body>
-  <!-- Logo in top left -->
-  <img src="Logo.svg?v=7" alt="arch-type logo" class="mark" />
+  <!-- Logo in top left linking to Instagram -->
+  <a href="https://www.instagram.com/arch__type/" target="_blank" rel="noopener noreferrer">
+    <img src="Logo.svg?v=9" alt="arch-type logo" class="mark" />
+  </a>
 
   <!-- Center stack -->
   <main>
-    <img class="title" src="contact.svg?v=7" alt="Contact" />
+    <img class="title" src="contact.svg?v=9" alt="Contact" />
 
     <a class="email" href="mailto:info@arch-type.org">
-      <img src="infoatarchetype.svg?v=7" alt="info@arch-type.org" />
+      <img src="infoatarchetype.svg?v=9" alt="info@arch-type.org" />
     </a>
 
     <a class="phone" href="tel:+17182184120">
-      <img id="phone" src="phonenumber.svg?v=7" alt="718.218.4120"
-           onerror="this.onerror=null; this.src='PhoneNumber.svg?v=7'">
+      <img id="phone" src="phonenumber.svg?v=9" alt="718.218.4120"
+           onerror="this.onerror=null; this.src='PhoneNumber.svg?v=9'">
     </a>
   </main>
 </body>
