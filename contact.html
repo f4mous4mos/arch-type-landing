@@ -2,73 +2,78 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contact – arch-type</title>
   <style>
-    :root {
-      /* Adjust this to visually match the landing page text */
-      --stack-w: 64vw;     
-      --max-stack: 2000px; /* large so it never caps out */
-      
-      --pad: 20px;         /* logo margin */
-      --logo-size: 44px;   /* logo diameter in the top-left */
-      --gap: 2.2vh;        /* vertical spacing between rows */
-      --page-bg: #fff;
-      --ink: #0b0b0b;
+    :root{
+      /* ONE knob to match the landing-page text size */
+      --stack-w: 62vw;           /* try 60–66vw to visually match */
+
+      --max-stack: 2000px;       /* effectively no cap */
+      --gap: 2.2vh;              /* vertical spacing between rows */
+      --pad: 20px;               /* logo margin */
+      --logo-size: 44px;         /* logo size in the top-left */
+      --bg: #fff;
+      --ink:#0b0b0b;
     }
 
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0;
-      height: 100%;
-      background: var(--page-bg);
-      color: var(--ink);
-      font-family: sans-serif;
-      display: grid;
-      place-items: center;
+    *{box-sizing:border-box}
+    html,body{
+      height:100%;
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      display:grid;
+      place-items:center;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
     }
 
-    /* logo in top-left */
-    .mark {
-      position: absolute;
-      top: var(--pad);
-      left: var(--pad);
-      width: var(--logo-size);
-      height: var(--logo-size);
+    /* top-left logo */
+    .mark{
+      position:absolute;
+      top:var(--pad);
+      left:var(--pad);
+      width:var(--logo-size);
+      height:var(--logo-size);
+      display:block;
     }
 
     /* main stack */
-    .stack {
+    .stack{
       width: min(var(--stack-w), var(--max-stack));
-      margin-inline: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--gap);
-      text-align: center;
+      margin-inline:auto;
+      text-align:center;
+    }
+    .stack > * + *{ margin-top: var(--gap); }
+
+    /* make SVGs fill the stack width */
+    .stack img{
+      width:100%;
+      height:auto;
+      display:block;
     }
 
-    .stack img {
-      width: 100%;      /* make SVGs scale with container */
-      height: auto;
-      display: block;
-    }
-
-    /* remove default link styling */
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    /* no link underline / color change */
+    a{ text-decoration:none; color:inherit; }
   </style>
 </head>
 <body>
   <!-- logo -->
-  <img src="Logo.svg?v=2" alt="arch-type logo" class="mark" />
+  <img class="mark" src="Logo.svg?v=4" alt="arch-type logo">
 
-  <!-- contact stack -->
+  <!-- three rows as SVGs -->
   <main class="stack">
-    <img src="contact.svg?v=2" alt="contact" />
+    <img src="contact.svg?v=4" alt="contact">
 
     <a href="mailto:info@arch-type.org">
-      <img src="infoatarchetype.svg?v=2" alt="info@arch-type.org" />
+      <img src="infoatarchetype.svg?v=4" alt="info@arch-type.org">
     </a>
+
+    <!-- fallback to the capitalized file if the lowercase one 404s -->
+    <a href="tel:+17182184120">
+      <img id="phone" src="phonenumber.svg?v=4" alt="718.218.4120"
+           onerror="this.onerror=null; this.src='PhoneNumber.svg?v=4'">
+    </a>
+  </main>
+</body>
+</html>
