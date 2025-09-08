@@ -2,133 +2,53 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="format-detection" content="telephone=no" />
-  <title>Contact — arch-type</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact – arch-type</title>
   <style>
-    :root{
-      --pad: 20px;           /* logo margin */
-      --logo-size: 40px;     /* logo diameter */
-      --h1: clamp(28px, 6vw, 48px);
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
-    *{ box-sizing: border-box; }
-    html, body{ height:100%; margin:0; }
-    body{
-      display:grid;
-      place-items:center;
-      background:#fff;
-      color:#0b0b0b;
-      font-family: Roboto, system-ui, -apple-system, Segoe UI, "Helvetica Neue", Arial, sans-serif;
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
+    .mark {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 40px;
     }
-
-    /* logo in top-left */
-    .mark{
-      position:absolute;
-      top:var(--pad);
-      left:var(--pad);
-      width:var(--logo-size);
-      height:var(--logo-size);
+    main {
+      text-align: center;
     }
-
-    main{ text-align:center; }
-
-    /* container whose width we will lock to the H1 width */
-    .stack{
-      display:inline-grid;
-      gap:.4rem;
-      width:max-content;  /* JS will set an explicit px width == h1 width */
+    main img {
+      display: block;
+      margin: 20px auto;
+      max-width: 400px; /* keeps consistency across devices */
+      width: 80vw;      /* scales down on small screens */
+      height: auto;
     }
-
-    h1{
-      margin:0;
-      font:400 var(--h1) Roboto, system-ui, -apple-system, Segoe UI, "Helvetica Neue", Arial, sans-serif;
-      letter-spacing:-.01em;
-      line-height:1.1;
-    }
-
-    /* children should never exceed the h1 width */
-    .bounded{ width:100%; margin:0; }
-
-    /* email styling */
-    .email a{
-      display:inline-block;
-      color:inherit;
-      text-decoration:none;         /* ← remove underline */
-      white-space:nowrap;           /* keep it on one line */
-      line-height:1.05;
-    }
-
-    /* phone svg will scale to the same width as the h1 */
-    .phone img{
-      width:100%;
-      height:auto;
-      vertical-align:-0.1em;
+    a {
+      display: inline-block;
     }
   </style>
 </head>
 <body>
-  <!-- logo -->
+  <!-- Logo in top left -->
   <img src="Logo.svg" alt="arch-type logo" class="mark" />
 
+  <!-- Center stack -->
   <main>
-    <div class="stack" id="stack" aria-labelledby="title">
-      <h1 id="title">contact</h1>
-
-      <p class="email bounded">
-        <a id="email" href="mailto:info@arch-type.org">info@arch-type.org</a>
-      </p>
-
-      <p class="phone bounded">
-        <a href="tel:+17182184120" aria-label="Call 718 218 4120">
-          <img src="PhoneNumber.svg" alt="718·218·4120" />
-        </a>
-      </p>
-    </div>
+    <img src="contact.svg" alt="Contact" />
+    <a href="mailto:info@arch-type.org">
+      <img src="infoatarchetype.svg" alt="info@arch-type.org" />
+    </a>
+    <a href="tel:+17182184120">
+      <img src="phonenumber.svg" alt="718.218.4120" />
+    </a>
   </main>
-
-  <script>
-    // Lock the container width to the h1 width,
-    // then fit the email font-size to exactly that width (no underline, no wrap).
-    (function(){
-      const stack = document.getElementById('stack');
-      const title = document.getElementById('title');
-      const email = document.getElementById('email');
-
-      function lockWidth(){
-        const w = title.getBoundingClientRect().width;
-        stack.style.width = w + 'px';
-      }
-
-      function fitEmail(){
-        const target = stack.getBoundingClientRect().width;
-        // start reasonably small and grow to fill, without wrapping
-        let size = 16;
-        email.style.fontSize = size + 'px';
-        email.style.whiteSpace = 'nowrap';
-
-        // grow until we hit the target width
-        while (email.scrollWidth < target && size < 200) {
-          size += 0.5;
-          email.style.fontSize = size + 'px';
-        }
-        // if we overshoot, back off a touch
-        if (email.scrollWidth > target) {
-          size -= 0.5;
-          email.style.fontSize = size + 'px';
-        }
-      }
-
-      function run(){
-        lockWidth();
-        fitEmail();
-      }
-
-      let t;
-      window.addEventListener('load', run);
-      window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(run, 80); });
-    })();
-  </script>
 </body>
 </html>
