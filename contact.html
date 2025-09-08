@@ -2,65 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact – arch-type</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Contact — arch-type</title>
   <style>
-    :root {
-      --pad: 20px;         /* logo margin */
-      --logo-size: 40px;   /* logo diameter */
-      --h1: clamp(28px, 6vw, 48px); /* heading size */
+    :root{
+      --pad: 20px;           /* logo margin */
+      --logo-size: 40px;     /* logo diameter */
+      --h1: clamp(28px, 6vw, 48px);
     }
-
-    * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; }
-    body {
-      display: grid;
-      place-items: center;
-      background: #fff;
-      color: #0b0b0b;
-      font-family: 'Roboto', sans-serif;
+    *{ box-sizing: border-box; }
+    html, body{ height:100%; margin:0; }
+    body{
+      display:grid;
+      place-items:center;
+      background:#fff;
+      color:#0b0b0b;
+      font-family: Roboto, system-ui, -apple-system, Segoe UI, "Helvetica Neue", Arial, sans-serif;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
 
     /* logo in top-left */
-    .mark {
-      position: absolute;
-      top: var(--pad);
-      left: var(--pad);
-      width: var(--logo-size);
-      height: var(--logo-size);
+    .mark{
+      position:absolute;
+      top:var(--pad);
+      left:var(--pad);
+      width:var(--logo-size);
+      height:var(--logo-size);
     }
 
-    main { text-align: center; }
+    main{ text-align:center; }
 
-    .stack {
-      display: inline-grid;   /* width matches widest child (h1) */
-      gap: .4rem;
+    /* container whose width we will lock to the H1 width */
+    .stack{
+      display:inline-grid;
+      gap:.4rem;
+      width:max-content;  /* JS will set an explicit px width == h1 width */
     }
 
-    h1 {
-      margin: 0;
-      font: 400 var(--h1) 'Roboto', sans-serif;
-      letter-spacing: -0.01em;
+    h1{
+      margin:0;
+      font:400 var(--h1) Roboto, system-ui, -apple-system, Segoe UI, "Helvetica Neue", Arial, sans-serif;
+      letter-spacing:-.01em;
+      line-height:1.1;
     }
 
-    .bounded {
-      width: 100%;
-      margin: 0;
+    /* children should never exceed the h1 width */
+    .bounded{ width:100%; margin:0; }
+
+    /* email styling */
+    .email a{
+      display:inline-block;
+      color:inherit;
+      text-decoration:none;         /* ← remove underline */
+      white-space:nowrap;           /* keep it on one line */
+      line-height:1.05;
     }
 
-    /* email look */
-    .email a {
-      color: inherit;
-      text-decoration: underline;
-      display: inline-block;
-      font-size: 1rem; /* will be auto-adjusted by JS */
-    }
-
-    /* phone svg scales */
-    .phone img {
-      width: 100%;
-      height: auto;
-      vertical-align: -0.1em;
+    /* phone svg will scale to the same width as the h1 */
+    .phone img{
+      width:100%;
+      height:auto;
+      vertical-align:-0.1em;
     }
   </style>
 </head>
@@ -69,11 +73,11 @@
   <img src="Logo.svg" alt="arch-type logo" class="mark" />
 
   <main>
-    <div class="stack" id="contactStack" aria-labelledby="c-title">
-      <h1 id="c-title">contact</h1>
+    <div class="stack" id="stack" aria-labelledby="title">
+      <h1 id="title">contact</h1>
 
       <p class="email bounded">
-        <a id="emailFit" href="mailto:info@arch-type.org">info@arch-type.org</a>
+        <a id="email" href="mailto:info@arch-type.org">info@arch-type.org</a>
       </p>
 
       <p class="phone bounded">
@@ -85,29 +89,45 @@
   </main>
 
   <script>
-    // Auto-fit email text width to match "contact"
+    // Lock the container width to the h1 width,
+    // then fit the email font-size to exactly that width (no underline, no wrap).
     (function(){
-      const stack = document.getElementById('contactStack');
-      const email = document.getElementById('emailFit');
+      const stack = document.getElementById('stack');
+      const title = document.getElementById('title');
+      const email = document.getElementById('email');
+
+      function lockWidth(){
+        const w = title.getBoundingClientRect().width;
+        stack.style.width = w + 'px';
+      }
 
       function fitEmail(){
         const target = stack.getBoundingClientRect().width;
-        let size = 16; // start ~16px
+        // start reasonably small and grow to fill, without wrapping
+        let size = 16;
         email.style.fontSize = size + 'px';
+        email.style.whiteSpace = 'nowrap';
+
+        // grow until we hit the target width
         while (email.scrollWidth < target && size < 200) {
           size += 0.5;
           email.style.fontSize = size + 'px';
         }
+        // if we overshoot, back off a touch
         if (email.scrollWidth > target) {
-          size -= 1.0;
+          size -= 0.5;
           email.style.fontSize = size + 'px';
         }
       }
 
+      function run(){
+        lockWidth();
+        fitEmail();
+      }
+
       let t;
-      function onResize(){ clearTimeout(t); t=setTimeout(fitEmail, 80); }
-      window.addEventListener('load', fitEmail);
-      window.addEventListener('resize', onResize);
+      window.addEventListener('load', run);
+      window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(run, 80); });
     })();
   </script>
 </body>
