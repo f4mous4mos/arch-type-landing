@@ -3,23 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact — arch–type</title>
+  <title>Contact – arch-type</title>
   <style>
     :root {
-      --pad: 20px;        /* logo margin */
-      --logo-size: 40px;  /* logo diameter */
+      --pad: 20px;         /* logo margin */
+      --logo-size: 40px;   /* logo diameter */
       --h1: clamp(28px, 6vw, 48px); /* heading size */
     }
+
     * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    html, body { height: 100%; margin: 0; }
     body {
-      margin: 0;
       display: grid;
       place-items: center;
       background: #fff;
       color: #0b0b0b;
       font-family: 'Roboto', sans-serif;
     }
+
     /* logo in top-left */
     .mark {
       position: absolute;
@@ -28,30 +29,86 @@
       width: var(--logo-size);
       height: var(--logo-size);
     }
+
     main { text-align: center; }
-    h1 {
-      margin: 0 0 12px;
-      font: 400 var(--h1) 'Roboto', sans-serif;
+
+    .stack {
+      display: inline-grid;   /* width matches widest child (h1) */
+      gap: .4rem;
     }
-    a { color: inherit; text-decoration: underline; }
+
+    h1 {
+      margin: 0;
+      font: 400 var(--h1) 'Roboto', sans-serif;
+      letter-spacing: -0.01em;
+    }
+
+    .bounded {
+      width: 100%;
+      margin: 0;
+    }
+
+    /* email look */
+    .email a {
+      color: inherit;
+      text-decoration: underline;
+      display: inline-block;
+      font-size: 1rem; /* will be auto-adjusted by JS */
+    }
+
+    /* phone svg scales */
     .phone img {
-      height: 1.35em;
-      vertical-align: middle;
+      width: 100%;
+      height: auto;
+      vertical-align: -0.1em;
     }
   </style>
 </head>
 <body>
   <!-- logo -->
-  <img src="Logo.svg" alt="arch–type logo" class="mark" />
+  <img src="Logo.svg" alt="arch-type logo" class="mark" />
 
   <main>
-    <h1>contact</h1>
-    <p><a href="mailto:info@arch-type.org">info@arch-type.org</a></p>
-    <p class="phone">
-      <a href="tel:+17182184120" aria-label="Call 718 218 4120">
-        <img src="PhoneNumber.svg" alt="718·218·4120" />
-      </a>
-    </p>
+    <div class="stack" id="contactStack" aria-labelledby="c-title">
+      <h1 id="c-title">contact</h1>
+
+      <p class="email bounded">
+        <a id="emailFit" href="mailto:info@arch-type.org">info@arch-type.org</a>
+      </p>
+
+      <p class="phone bounded">
+        <a href="tel:+17182184120" aria-label="Call 718 218 4120">
+          <img src="PhoneNumber.svg" alt="718·218·4120" />
+        </a>
+      </p>
+    </div>
   </main>
+
+  <script>
+    // Auto-fit email text width to match "contact"
+    (function(){
+      const stack = document.getElementById('contactStack');
+      const email = document.getElementById('emailFit');
+
+      function fitEmail(){
+        const target = stack.getBoundingClientRect().width;
+        let size = 16; // start ~16px
+        email.style.fontSize = size + 'px';
+        while (email.scrollWidth < target && size < 200) {
+          size += 0.5;
+          email.style.fontSize = size + 'px';
+        }
+        if (email.scrollWidth > target) {
+          size -= 1.0;
+          email.style.fontSize = size + 'px';
+        }
+      }
+
+      let t;
+      function onResize(){ clearTimeout(t); t=setTimeout(fitEmail, 80); }
+      window.addEventListener('load', fitEmail);
+      window.addEventListener('resize', onResize);
+    })();
+  </script>
 </body>
 </html>
