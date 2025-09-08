@@ -3,76 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact – arch-type</title>
+  <meta name="format-detection" content="telephone=no" />
+  <title>Contact — arch-type</title>
   <style>
     :root{
-      /* ONE knob to match the landing-page text size */
-      --stack-w: 62vw;           /* try 60–66vw to visually match */
-
-      --max-stack: 2000px;       /* effectively no cap */
-      --gap: 2.2vh;              /* vertical spacing between rows */
-      --pad: 20px;               /* logo margin */
-      --logo-size: 44px;         /* logo size in the top-left */
-      --bg: #fff;
-      --ink:#0b0b0b;
+      /* <<< Set this to your Illustrator bounding box width >>> */
+      --stack-w: clamp(280px, 40vw, 560px);
+      --gap: 20px;
     }
-
-    *{box-sizing:border-box}
-    html,body{
-      height:100%;
-      margin:0;
-      background:var(--bg);
-      color:var(--ink);
+    html, body { height:100%; margin:0; }
+    body{
+      background:#fff;
       display:grid;
       place-items:center;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      color:#0b0b0b;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
-    /* top-left logo */
+    /* logo top-left */
     .mark{
       position:absolute;
-      top:var(--pad);
-      left:var(--pad);
-      width:var(--logo-size);
-      height:var(--logo-size);
-      display:block;
+      top:20px; left:20px;
+      width:40px; height:auto;
     }
 
-    /* main stack */
-    .stack{
-      width: min(var(--stack-w), var(--max-stack));
-      margin-inline:auto;
+    /* vertical stack that controls the width for all three lines */
+    main{
+      width:var(--stack-w);
+      display:grid;
+      justify-items:center;
+      gap:var(--gap);
       text-align:center;
     }
-    .stack > * + *{ margin-top: var(--gap); }
 
-    /* make SVGs fill the stack width */
-    .stack img{
-      width:100%;
-      height:auto;
-      display:block;
-    }
+    /* every row sits on its own line and shares the same width */
+    .line{ display:block; width:100%; }
+    .line img{ display:block; width:100%; height:auto; }
 
-    /* no link underline / color change */
-    a{ text-decoration:none; color:inherit; }
+    /* clickable rows */
+    a.line{ text-decoration:none; color:inherit; }
   </style>
 </head>
 <body>
-  <!-- logo -->
-  <img class="mark" src="Logo.svg?v=4" alt="arch-type logo">
+  <img src="Logo.svg" alt="arch-type logo" class="mark" />
 
-  <!-- three rows as SVGs -->
-  <main class="stack">
-    <img src="contact.svg?v=4" alt="contact">
-
-    <a href="mailto:info@arch-type.org">
-      <img src="infoatarchetype.svg?v=4" alt="info@arch-type.org">
+  <main aria-label="Contact information">
+    <img class="line" src="contact.svg"         alt="contact" />
+    <a   class="line" href="mailto:info@arch-type.org" aria-label="Email info@arch-type.org">
+      <img src="infoatarchetype.svg" alt="info@arch-type.org" />
     </a>
-
-    <!-- fallback to the capitalized file if the lowercase one 404s -->
-    <a href="tel:+17182184120">
-      <img id="phone" src="phonenumber.svg?v=4" alt="718.218.4120"
-           onerror="this.onerror=null; this.src='PhoneNumber.svg?v=4'">
+    <a   class="line" href="tel:+17182184120"   aria-label="Call 718 218 4120">
+      <img src="phonenumber.svg"     alt="718·218·4120" />
     </a>
   </main>
 </body>
