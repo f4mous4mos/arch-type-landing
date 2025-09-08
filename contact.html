@@ -2,83 +2,73 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact — arch-type</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact – arch-type</title>
   <style>
-    :root{
-      /* This is the ONE knob: how wide the whole stack should be, as a % of the viewport width */
-      --stack-w: 60vw;         /* try 60–66vw to zero in on an exact visual match */
-      --max-stack: 2000px;      /* prevents it from getting too big on desktop */
-      --gap: 2.2vh;            /* vertical spacing between rows */
-      --pad: 20px;             /* logo margin */
-      --logo-size: 44px;       /* logo diameter in the top-left */
+    :root {
+      /* Adjust this to visually match the landing page text */
+      --stack-w: 62vw;     
+      --max-stack: 2000px; /* large so it never caps out */
+      
+      --pad: 20px;         /* logo margin */
+      --logo-size: 44px;   /* logo diameter in the top-left */
+      --gap: 2.2vh;        /* vertical spacing between rows */
       --page-bg: #fff;
       --ink: #0b0b0b;
     }
 
     * { box-sizing: border-box; }
     html, body {
-      height: 100%;
       margin: 0;
+      height: 100%;
       background: var(--page-bg);
       color: var(--ink);
-      font-family: Roboto, system-ui, -apple-system, Segoe UI, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol";
-    }
-
-    /* center column */
-    .wrap{
-      min-height: 100%;
+      font-family: sans-serif;
       display: grid;
       place-items: center;
-      padding: max(8vh, 48px) 0; /* give the stack breathing room on small screens */
     }
 
-    /* top-left mark */
-    .mark{
-      position: fixed;
+    /* logo in top-left */
+    .mark {
+      position: absolute;
       top: var(--pad);
       left: var(--pad);
       width: var(--logo-size);
       height: var(--logo-size);
     }
 
-    /* the stacked svgs */
-    .stack{
+    /* main stack */
+    .stack {
       width: min(var(--stack-w), var(--max-stack));
-      display: grid;
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       gap: var(--gap);
-      justify-items: center;
+      text-align: center;
     }
 
-    .stack img{
-      display: block;
-      width: 100%;         /* each row fills the stack width */
+    .stack img {
+      width: 100%;      /* make SVGs scale with container */
       height: auto;
-      user-select: none;
-      -webkit-user-drag: none;
+      display: block;
     }
 
-    /* tiny bump for desktops so it doesn’t look small on big monitors */
-    @media (min-width: 1024px){
-      :root{ --gap: 2.0vh; }
+    /* remove default link styling */
+    a {
+      text-decoration: none;
+      color: inherit;
     }
   </style>
 </head>
 <body>
   <!-- logo -->
-  <img class="mark" src="Logo.svg" alt="arch-type" />
+  <img src="Logo.svg?v=2" alt="arch-type logo" class="mark" />
 
-  <!-- centered column -->
-  <main class="wrap">
-    <div class="stack" aria-label="Contact information">
-      <img src="contact.svg"        alt="contact" />
-      <a href="mailto:info@arch-type.org" aria-label="Email info@arch-type.org">
-        <img src="infoatarchetype.svg" alt="info@arch-type.org" />
-      </a>
-      <a href="tel:+17182184120" aria-label="Call 718 218 4120">
-        <img src="phonenumber.svg"  alt="718.218.4120" />
-      </a>
-    </div>
-  </main>
-</body>
-</html>
+  <!-- contact stack -->
+  <main class="stack">
+    <img src="contact.svg?v=2" alt="contact" />
+
+    <a href="mailto:info@arch-type.org">
+      <img src="infoatarchetype.svg?v=2" alt="info@arch-type.org" />
+    </a>
