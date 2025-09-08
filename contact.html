@@ -2,60 +2,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="format-detection" content="telephone=no" />
-  <title>Contact — arch-type</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact – arch-type</title>
   <style>
     :root{
-      /* <<< Set this to your Illustrator bounding box width >>> */
-      --stack-w: clamp(280px, 40vw, 560px);
-      --gap: 20px;
+      --w: 80vw;       /* overall stack width */
+      --max: 400px;    /* desktop cap */
+      --gap-big: 40px; /* space after the title */
+      --gap-small: 12px; /* tighter space between email and phone */
     }
-    html, body { height:100%; margin:0; }
-    body{
-      background:#fff;
-      display:grid;
-      place-items:center;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      color:#0b0b0b;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
-
-    /* logo top-left */
-    .mark{
-      position:absolute;
-      top:20px; left:20px;
-      width:40px; height:auto;
+    .mark {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 40px;
+      height: auto;
+      display: block;
     }
-
-    /* vertical stack that controls the width for all three lines */
-    main{
-      width:var(--stack-w);
-      display:grid;
-      justify-items:center;
-      gap:var(--gap);
-      text-align:center;
+    main {
+      text-align: center;
     }
-
-    /* every row sits on its own line and shares the same width */
-    .line{ display:block; width:100%; }
-    .line img{ display:block; width:100%; height:auto; }
-
-    /* clickable rows */
-    a.line{ text-decoration:none; color:inherit; }
+    main img {
+      display: block;
+      margin: 0 auto;
+      width: min(var(--w), var(--max));
+      height: auto;
+    }
+    /* spacing rules */
+    .title { margin-bottom: var(--gap-big); }
+    .email { margin-bottom: var(--gap-small); }
+    .phone { margin-bottom: 0; }
+    a { text-decoration: none; }
   </style>
 </head>
 <body>
-  <img src="Logo.svg" alt="arch-type logo" class="mark" />
+  <!-- Logo in top left -->
+  <img src="Logo.svg?v=6" alt="arch-type logo" class="mark" />
 
-  <main aria-label="Contact information">
-    <img class="line" src="contact.svg"         alt="contact" />
-    <a   class="line" href="mailto:info@arch-type.org" aria-label="Email info@arch-type.org">
-      <img src="infoatarchetype.svg" alt="info@arch-type.org" />
+  <!-- Center stack -->
+  <main>
+    <img class="title" src="contact.svg?v=6" alt="Contact" />
+
+    <a class="email" href="mailto:info@arch-type.org">
+      <img src="infoatarchetype.svg?v=6" alt="info@arch-type.org" />
     </a>
-    <a   class="line" href="tel:+17182184120"   aria-label="Call 718 218 4120">
-      <img src="phonenumber.svg"     alt="718·218·4120" />
+
+    <a class="phone" href="tel:+17182184120">
+      <img id="phone" src="phonenumber.svg?v=6" alt="718.218.4120"
+           onerror="this.onerror=null; this.src='PhoneNumber.svg?v=6'">
     </a>
   </main>
 </body>
